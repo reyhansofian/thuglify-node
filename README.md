@@ -18,3 +18,7 @@ This package uses:
 1. Go to root directory of this package
 2. Run `node images/lenna.png` as example. It will create a new file `images/lenna-processed.png` with glasses on her face.
 
+# Preview
+
+![alt text](https://github.com/reyhansofian/thuglify-node/blob/master/images/lenna-processed.png "Thuglife Lenna")
+
