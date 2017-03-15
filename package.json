@@ -1,0 +1,24 @@
+{
+  "name": "thuglify-node",
+  "version": "1.0.0",
+  "description": "Thuglify your photo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Reyhan Sofian",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^1.6.4",
+    "faced": "^1.2.0",
+    "sharp": "^0.17.2",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "eslint": "^3.17.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0"
+  }
+}
