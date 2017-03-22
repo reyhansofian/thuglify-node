@@ -1,25 +1,44 @@
+#!/usr/bin/env node
+
 const _ = require('underscore');
+const program = require('commander');
 const path = require('path');
 const fs = require('fs');
 const Faced = require('faced');
 const Canvas = require('canvas');
 const ImageProcessing = require('./ImageProcessing');
 const FaceProcessing = require('./FaceProcessing');
+const FileProcessing = require('./FileProcessing');
 
 const faced = new Faced();
 const imageProcessing = new ImageProcessing();
+const fileProcessing = new FileProcessing();
 
-const getFilename = file => path.basename(file).split('.')[0];
+program
+  .version('1.0.0')
+  .option('-i --input <path>', 'Image file path')
+  .parse(process.argv);
 
-imageProcessing.constructor.getImageMetadata(process.argv[2])
+fileProcessing.checkFileExist(program.input)
+  .then((isExist) => {
+    if (typeof program.input === 'undefined') {
+      throw new Error('Please specify the image path using \'--input\' options');
+    }
+
+    if (!isExist) {
+      throw new Error(`File with path ${program.input} is not exists!`);
+    }
+
+    return imageProcessing.getImageMetadata(program.input);
+  })
   .then((metadata) => {
     const { width, height } = metadata;
     const Image = Canvas.Image;
     const canvas = new Canvas(width, height);
     const ctx = canvas.getContext('2d');
-    const imagePath = path.join(__dirname, '/images', `${getFilename(process.argv[2])}-processed.png`);
+    const imagePath = path.join(__dirname, '/images', `${fileProcessing.getFilename(program.input)}-processed.png`);
 
-    return imageProcessing.constructor.convertImageToPng(process.argv[2], imagePath)
+    return imageProcessing.convertImageToPng(program.input, imagePath)
       .then(() => {
         faced.detect(imagePath, (faces) => {
           const faceProcessing = new FaceProcessing();
@@ -41,11 +60,11 @@ imageProcessing.constructor.getImageMetadata(process.argv[2])
 
                 ctx
                   .drawImage(
-                      glasses,
-                      faceProcessing.eyeLeft[0].getX(),
-                      faceProcessing.eyeLeft[0].getY(),
-                      faceProcessing.calculateGlassesWidth(),
-                      faceProcessing.eyeLeft[0].getHeight()
+                    glasses,
+                    faceProcessing.eyeLeft[0].getX(),
+                    faceProcessing.eyeLeft[0].getY(),
+                    faceProcessing.calculateGlassesWidth(),
+                    faceProcessing.eyeLeft[0].getHeight()
                   );
 
                 canvas
@@ -55,8 +74,8 @@ imageProcessing.constructor.getImageMetadata(process.argv[2])
             });
           });
         });
-      })
-      .catch((err) => {
-        console.error(err);
       });
+  })
+  .catch((err) => {
+    console.error(err);
   });

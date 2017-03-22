@@ -1,11 +1,11 @@
 const sharp = require('sharp');
 
 class ImageProcessing {
-  static getImageMetadata(file) {
+  getImageMetadata(file) {
     return sharp(file).metadata();
   }
 
-  static convertImageToPng(inputFilePath, outputFilePath) {
+  convertImageToPng(inputFilePath, outputFilePath) {
     return sharp(inputFilePath)
       .png()
       .toFile(outputFilePath);
