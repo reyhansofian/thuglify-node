@@ -20,5 +20,6 @@ This package uses:
 
 # Preview
 
+![alt_text](https://github.com/reyhansofian/thuglify-node/blob/master/assets/thuglify%20node.gif "Thuglife demo")
 ![alt text](https://github.com/reyhansofian/thuglify-node/blob/master/images/lenna-processed.png "Thuglife Lenna")
 
